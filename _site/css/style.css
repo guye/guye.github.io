@@ -644,6 +644,9 @@ aside li.cur-panel a{
     color:#826a35;
 }
 
+.left-aside li a:hover {
+    color: #0DA70D;
+}
 /*
 aside li a:after{
     content:"";
@@ -882,4 +885,40 @@ aside li.cur-panel a:after{
 .product_gbck li img {
     width: 120px;
     height: 150px;
+}
+
+.solution_content {
+    display:block;
+    width: 60%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border-left: 1px dotted #333333;
+    border-right: 1px dotted #333333;
+}
+.solution_item {
+    padding: 20px 0;
+}
+
+.solution_item h3{
+    font-size: 30px;
+    text-align: center;
+    padding: 30px 0;
+}
+
+.solution_content h4 {
+    display: block;
+    color: #0DA70D;
+    font-size: 25px;
+    padding: 20px 40px;
+}
+
+.solution_content section {
+    padding: 0 40px;
+}
+
+.solution_content .img_div {
+    border: 1px solid #626262;
+    background-color: white;
+    text-align: center;
+    padding: 10px 10px;
 }

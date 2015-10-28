@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+  <head>
+    <title>PID控制原理及调试要诀</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="keywords" content="PID控制原理及调试要诀,自动控制, PID,,Guovz" />
+    <meta name="description" content="PID控制原理及调试要诀, 自动控制, PID, 无论在FA领域还是在PA领域，PID算法都是各类工业控制技术的祖师爷，那么其原理是什么呢？" />
+
+  <!--官方css引入-->
+  <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
+
+  <!-- pithy样式引入 -->
+  <link rel="stylesheet" href="/articles/assets/stylesheet/pithy.css">
+  <!-- header样式引入 -->
+  <link rel="stylesheet" href="/articles/assets/stylesheet/header.css">
+
+  <!--bootstrap支持IE8-->
+  <!--[if lt IE 9]>
+  <script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.js"></script>
+  <![endif]-->
+
+    <link rel="canonical" href="http://www.zw-tech.com/articles/2015/10/20/pidcontrol/">
+    <link rel="alternate" type="application/rss+xml" title="Guovz" href="http://www.zw-tech.com/articles/feed.xml" />
+</head>
+
+<body>
+<!-- 导航菜单 -->
+      <header class="clearfix">
+        <h1 style="margin-top: 0px; margin-bottom: 0px; height: 105px;" >
+            <a href>
+            </a>
+        </h1>
+        <nav>
+            <ul style="margin-top: 0px; margin-bottom: 0px;" >
+                <li><a href="index.html"><span>首页</span></a></li>
+                <li class="has-menu"><a href="http://www.zw-tech.com/products.html"><span>产品</span></a>
+                </li>
+                <li class="has-menu"><a href="http://www.zw-tech.com/services.html">开发服务</a>
+                </li>
+
+                <li><a href="http://www.zw-tech.com/manual/">产品资料</a></li>
+                <li><a href="http://www.zw-tech.com/article/">技术文章</a></li>
+                <li><a href="http://www.zw-tech.com/about.html">关于</a></li>
+            </ul>
+        </nav>
+
+    </header>
+
+
+  <div class="container page-content">
+    <div class="container">
+    <div class="col-md-9 col-content">
+        <div id="post-content" class="panel panel-pithy post">
+            <div class="panel-heading">
+                <h3 class="title">
+                  <i class="fa fa-bookmark-o"></i>PID控制原理及调试要诀
+                </h3>
+                <ul class="info">
+                    <li>作者：<span class="author">zenkoo</span></li>
+                    <li>最后编辑：2015年10月20日</li>
+                    <li>标签：
+                     
+                         <a class="tag" href="http://www.zw-tech.com/articles/tag/#PID">PID</a>
+                     
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body content">
+                <h3 id="pid">PID控制原理</h3>
+<p>无论在FA领域还是在PA领域，PID算法都是各类工业控制技术的祖师爷，那么其原理是什么呢？<br />
+我们需要把以下图片牢牢记在脑海中，经常看看，边看边学，边看边用，用着用着，就慢慢懂了：<br />
+<img src="http://www.zw-tech.com/articles/assets/images/2015-10-20/pid.jpg" alt="PID原理图" /></p>
+
+<p><br /></p>
+
+<h3 id="pid-1">PID控制算法原理图及其快速调试要诀</h3>
+<p>熟记PID整定调教顺口溜:<br />
+参数整定找最佳，从小到大顺序查；<br />
+先是比例后积分，最后再把微分加；<br />
+曲线振荡很频繁，比例度盘要放大；<br />
+曲线漂浮绕大湾，比例度盘往小扳；<br />
+曲线偏离回复慢，积分时间往下降；<br />
+曲线波动周期长，积分时间再加长；<br />
+曲线振荡频率快，先把微分降下来；<br />
+动差大来波动慢。微分时间应加长；<br />
+理想曲线两个波，前高后低四比一；<br />
+一看二调多分析，调节质量不会低。</p>
+
+<p><br /><br />
+#### 现场调试经验1<br />
+* P只要不震荡，尽可能大，快速性好。<br />
+* 能够满足静差，I尽可能的小，快速性好。这需要和P值配合。<br />
+* D值属于附加，根据PI值得状况，适当的大点，增加快速性好 。<br />
+<br /></p>
+
+<h4 id="section">现场调试经验2</h4>
+
+<p>PID控制器参数整定的方法很多，概括起来有两大类：</p>
+
+<ul>
+  <li>是理论计算整定法。它主要是依据系统的数学模型，经过理论计算确定控制器参数。这种方法所得到的计算数据未必可以直接用，还必须通过工程实际进行调整和修改。</li>
+  <li>是工程整定方法。它主要依赖工程经验，直接在控制系统的试验中进行，且方法简单、易于掌握，在工程实际中被广泛采用。<br />
+<br /></li>
+</ul>
+
+<p>PID控制器参数的工程整定方法，主要有临界比例法、反应曲线法和衰减法。现在一般采用的是临界比例法。利用该方法进行PID控制器参数的整定步骤如下：<br />
+首先预选择一个足够短的采样周期让系统工作；</p>
+
+<ul>
+  <li>仅加入比例控制环节，直到系统对输入的阶跃响应出现临界振荡，记下这时的比例放大系数和临界振荡周期；</li>
+  <li>在一定的控制度下通过公式计算得到PID控制器的参数。<br />
+<br /></li>
+</ul>
+
+<p>PID参数的设定：是靠经验及工艺的熟悉，参考测量值跟踪与设定值曲线，从而调整P\I\D的大小。 PID控制器参数的工程整定，各种调节系统中P.I.D参数经验数据以下可参照：</p>
+
+<ul>
+  <li>温度T: P=20~60%，T=180~600s，D=3-180s；</li>
+  <li>压力P: P=30~70%，T=24~180s；</li>
+  <li>液位L: P=20~80%，T=60~300s；</li>
+  <li>流量L: P=40~100%，T=6~60s。</li>
+</ul>
+
+            </div>
+        </div>
+        <!-- 评论 -->
+<div id="post-comment" class="panel panel-default">
+    <div class="panel-body">
+        <div id="disqus_thread" data-thread-key="/2015/10/20/pidcontrol" data-title="PID控制原理及调试要诀" data-url="http://www.zw-tech.com/articles/2015/10/20/pidcontrol/"></div>
+        <script>
+            /**
+             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+             */
+            /*
+             var disqus_config = function () {
+             this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+             this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+             };
+             */
+            (function() {  // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+
+                s.src = '//xiaochu-tech.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+</div>
+
+    </div>
+    <div class="col-md-3 col-sidebar">
+        <!-- 分类列表 -->
+<div class="panel panel-default categories">
+    <div class="panel-heading title">
+        文章分类
+    </div>
+    <div class="panel-body list">
+        <ul>
+          <li>
+              <a class="catelink" href="http://www.zw-tech.com/articles/category/#all" data-target-cate="#all">
+                  所有分类&nbsp;<span class="count">[6]</span>
+              </a>
+          </li>
+          
+          <li>
+              <a class="catelink" href="http://www.zw-tech.com/articles/category/#感悟人生" data-target-cate="#感悟人生">
+                  感悟人生&nbsp;<span class="count">[1]</span>
+              </a>
+          </li>
+
+          
+          <li>
+              <a class="catelink" href="http://www.zw-tech.com/articles/category/#前端开发" data-target-cate="#前端开发">
+                  前端开发&nbsp;<span class="count">[1]</span>
+              </a>
+          </li>
+
+          
+          <li>
+              <a class="catelink" href="http://www.zw-tech.com/articles/category/#数据应用" data-target-cate="#数据应用">
+                  数据应用&nbsp;<span class="count">[1]</span>
+              </a>
+          </li>
+
+          
+          <li>
+              <a class="catelink" href="http://www.zw-tech.com/articles/category/#数据库应用" data-target-cate="#数据库应用">
+                  数据库应用&nbsp;<span class="count">[1]</span>
+              </a>
+          </li>
+
+          
+          <li>
+              <a class="catelink" href="http://www.zw-tech.com/articles/category/#node开发" data-target-cate="#node开发">
+                  node开发&nbsp;<span class="count">[1]</span>
+              </a>
+          </li>
+
+          
+          <li>
+              <a class="catelink" href="http://www.zw-tech.com/articles/category/#自动控制" data-target-cate="#自动控制">
+                  自动控制&nbsp;<span class="count">[1]</span>
+              </a>
+          </li>
+
+          
+        </ul>
+    </div>
+</div>
+
+        <!-- tag列表 -->
+<div class="panel panel-default tags">
+    <div class="panel-heading title">
+        标签云
+    </div>
+    <div class="panel-body list">
+        
+            <a class="taglink" href="http://www.zw-tech.com/articles/tag/#信仰" data-target-cate="#信仰">
+                信仰
+            </a>
+        
+            <a class="taglink" href="http://www.zw-tech.com/articles/tag/#triangle" data-target-cate="#triangle">
+                triangle
+            </a>
+        
+            <a class="taglink" href="http://www.zw-tech.com/articles/tag/#ubuntu" data-target-cate="#ubuntu">
+                ubuntu
+            </a>
+        
+            <a class="taglink" href="http://www.zw-tech.com/articles/tag/#MySQL" data-target-cate="#MySQL">
+                MySQL
+            </a>
+        
+            <a class="taglink" href="http://www.zw-tech.com/articles/tag/#MongoDB" data-target-cate="#MongoDB">
+                MongoDB
+            </a>
+        
+            <a class="taglink" href="http://www.zw-tech.com/articles/tag/#install" data-target-cate="#install">
+                install
+            </a>
+        
+            <a class="taglink" href="http://www.zw-tech.com/articles/tag/#node" data-target-cate="#node">
+                node
+            </a>
+        
+            <a class="taglink" href="http://www.zw-tech.com/articles/tag/#PID" data-target-cate="#PID">
+                PID
+            </a>
+        
+    </div>
+</div>
+
+    </div>
+</div>
+
+  </div>
+
+  <footer>
+  <div id="totop" class="totop">
+      <i class="fa fa-chevron-up"></i>
+  </div>
+</footer>
+
+
+  <!--官方JS引入-->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/articles/assets/script/pithy.js"></script>
+</body>
+</html>
