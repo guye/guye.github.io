@@ -370,7 +370,7 @@ $(function() {
 
 		var parames={};
 		$.ajax({
-			url:'temp/header.html',
+			url:'http://zw-tech.com/temp/header.html',
 			type:'get',
 			dataType:'html',
 			data:parames,
@@ -380,7 +380,7 @@ $(function() {
 			}
 		});
 		$.ajax({
-			url:'temp/footer.html',
+			url:'http://zw-tech.com/temp/footer.html',
 			type:'get',
 			dataType:'html',
 			data:parames,
